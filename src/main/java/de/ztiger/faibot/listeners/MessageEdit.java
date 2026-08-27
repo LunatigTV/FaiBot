@@ -33,8 +33,8 @@ public class MessageEdit extends ListenerAdapter {
 
             MessageCachingService.CachedMessage oldMessage = messageCachingService.get(message.getIdLong());
 
-            if (oldMessage == null) {
-                log.warn("Message with ID {} not found in cache", message.getIdLong());
+            if (oldMessage == null || oldMessage.content().equals(message.getContentRaw())) {
+                log.warn("Message with ID {} not found in cache or content unchanged", message.getIdLong());
                 return;
             }
 

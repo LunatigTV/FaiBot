@@ -1,6 +1,6 @@
 package de.ztiger.faibot.utils;
 
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import de.ztiger.faibot.data.ExternalReference;
@@ -24,7 +24,13 @@ public class DatabaseManager {
         String username = env.get("DB_USER");
         String password = env.get("DB_PASSWORD");
 
-        connectionSource = new JdbcConnectionSource(url, username, password);
+        JdbcPooledConnectionSource pooledSource = new JdbcPooledConnectionSource(url, username, password);
+
+        pooledSource.setCheckConnectionsEveryMillis(1000 * 60);
+        pooledSource.setMaxConnectionsFree(5);
+        pooledSource.setMaxConnectionAgeMillis(1000 * 60 * 60);
+
+        this.connectionSource = pooledSource;
 
         TableUtils.createTableIfNotExists(connectionSource, Placement.class);
         TableUtils.createTableIfNotExists(connectionSource, Season.class);
