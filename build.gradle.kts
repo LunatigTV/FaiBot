@@ -5,8 +5,8 @@ plugins {
     id ("io.freefair.lombok") version "9.0.0"
 }
 
-group = "de.ztiger"
-version = "4.0.2"
+group = "de.lunatig"
+version = "4.1.0"
 
 repositories {
     mavenCentral()
@@ -35,7 +35,7 @@ val generatedLocalizationDir = layout.buildDirectory.dir("generated/sources/loca
 
 val localizationYamlPath: String = rootProject.file("../k8s-deployments/apps/faibot/i18n/de_DE.yml").absolutePath
 
-val targetPackage = "de.ztiger.faibot.localization.keys"
+val targetPackage = "de.lunatig.faibot.localization.keys"
 
 val generateLocalizationClasses by tasks.registering(Exec::class) {
     group = "build setup"
@@ -72,7 +72,7 @@ tasks {
     shadowJar {
         archiveClassifier.set("")
         manifest {
-            attributes["Main-Class"] = "de.ztiger.faibot.FaiBot"
+            attributes["Main-Class"] = "de.lunatig.faibot.FaiBot"
         }
     }
 }
