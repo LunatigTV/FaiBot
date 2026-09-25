@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   call-build:
-    uses: zTig3r/workflows/.github/workflows/build-and-push-docker-image.yml@main
+    uses: LunatigTV/workflows/.github/workflows/build-and-push-docker-image.yml@main
     with:
       project_name: 'faibot'
     secrets:
