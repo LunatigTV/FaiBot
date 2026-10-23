@@ -15,7 +15,7 @@ public class FaiBot {
 
     public static void main(String[] args) {
         try {
-            Dotenv env = Dotenv.configure().load();
+            Dotenv env = Dotenv.configure().ignoreIfMissing().load();
 
             AppContainer app = new AppContainer(env);
 
