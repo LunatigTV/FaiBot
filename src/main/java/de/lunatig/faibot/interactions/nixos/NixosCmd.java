@@ -27,6 +27,7 @@ import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.time.Month;
 import java.time.YearMonth;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -171,24 +173,37 @@ public class NixosCmd implements ICommand, IButtonHandler, IModalHandler {
             return;
         }
 
-        String nixosRoleMention = roleProvider.getRole(BotRole.NIXOS).map(IMentionable::getAsMention).orElse("@nixos");
+        List<CompletableFuture<FileUpload>> futures = attachments.stream().map(attachment -> attachment.getProxy().download()
+                .thenApply(stream -> FileUpload.fromData(stream, attachment.getFileName()))).toList();
 
-        channelProvider.sendComponentAndCreateThread(
-                BotChannel.NIXOS,
-                nixosComponents.getWinnerComponent(localizedMonth, yearStr, formattedTopList, winners, prices, attachments,
-                                                   nixosRoleMention),
-                i18n.format(Nixos.Message.THREAD, "month", localizedMonth, "year", yearStr)
-        );
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenAccept(v -> {
+                    List<FileUpload> files = futures.stream().map(CompletableFuture::join).toList();
+                    String nixosRoleMention = roleProvider.getRole(BotRole.NIXOS).map(IMentionable::getAsMention).orElse("@nixos");
 
-        hook.sendMessage(i18n.get(Nixos.Success.PUBLISH)).setEphemeral(true).queue();
+                    channelProvider.sendComponentAndCreateThread(
+                            BotChannel.NIXOS,
+                            nixosComponents.getWinnerComponent(localizedMonth, yearStr, formattedTopList, winners, prices, attachments,
+                                                               nixosRoleMention),
+                            i18n.format(Nixos.Message.THREAD, "month", localizedMonth, "year", yearStr),
+                            files
+                    );
 
-        try {
-            hallOfFameService.updateHallOfFame();
-            hook.sendMessage(i18n.get(HallOfFame.Success.UPDATE)).setEphemeral(true).queue();
-        } catch (Exception e) {
-            log.error("Error while updating Hall of Fame data", e);
-            hook.sendMessage(i18n.get(HallOfFame.Error.UPDATE)).setEphemeral(true).queue();
-        }
+                    hook.sendMessage(i18n.get(Nixos.Success.PUBLISH)).setEphemeral(true).queue();
+
+                    try {
+                        hallOfFameService.updateHallOfFame();
+                        hook.sendMessage(i18n.get(HallOfFame.Success.UPDATE)).setEphemeral(true).queue();
+                    } catch (Exception e) {
+                        log.error("Error while updating Hall of Fame data", e);
+                        hook.sendMessage(i18n.get(HallOfFame.Error.UPDATE)).setEphemeral(true).queue();
+                    }
+                })
+                .exceptionally(e -> {
+                    log.error("Failed to download interaction attachment streams", e);
+                    hook.sendMessage(i18n.get(General.ERROR)).setEphemeral(true).queue();
+                    return null;
+                });
     }
 
     private List<String> parsePrices(String priceOption) {

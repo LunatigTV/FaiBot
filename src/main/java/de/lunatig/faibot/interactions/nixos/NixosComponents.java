@@ -76,7 +76,8 @@ public class NixosComponents {
                 })
                 .toList();
 
-        List<MediaGalleryItem> winnerGalleryItems = winnerImages.stream().map(image -> MediaGalleryItem.fromUrl(image.getUrl())).toList();
+        List<MediaGalleryItem> winnerGalleryItems = winnerImages.stream()
+                .map(image -> MediaGalleryItem.fromUrl("attachment://" + image.getFileName())).toList();
 
         return Container.of(
                 TextDisplay.of(i18n.format(Nixos.Message.TITLE, "month", month, "year", year)),

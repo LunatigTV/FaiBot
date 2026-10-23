@@ -12,8 +12,10 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import net.dv8tion.jda.api.sharding.ShardManager;
+import net.dv8tion.jda.api.utils.FileUpload;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -52,8 +54,8 @@ public class ChannelProvider {
         getRequiredChannel(channel).editMessageComponentsById(messageId, component).useComponentsV2().queue();
     }
 
-    public void sendComponentAndCreateThread(BotChannel channel, MessageTopLevelComponent component, String threadName) {
-        getRequiredChannel(channel).sendMessageComponents(component).useComponentsV2().submit()
+    public void sendComponentAndCreateThread(BotChannel channel, MessageTopLevelComponent component, String threadName, List<FileUpload> files ) {
+        getRequiredChannel(channel).sendMessageComponents(component).addFiles(files).useComponentsV2().submit()
                 .thenCompose(message -> message.createThreadChannel(threadName).submit());
     }
 
