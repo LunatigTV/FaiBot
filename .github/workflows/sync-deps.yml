@@ -1,0 +1,12 @@
+name: Sync main to deps
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    uses: LunatigTV/workflows/.github/workflows/sync-deps-branch.yml@main
