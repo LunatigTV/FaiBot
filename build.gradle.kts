@@ -28,7 +28,7 @@ dependencies {
     implementation("com.sparkjava:spark-core:2.9.4")
     implementation("com.j256.ormlite:ormlite-core:6.1")
     implementation("com.j256.ormlite:ormlite-jdbc:6.1")
-    implementation("com.github.ben-manes.caffeine:caffeine:3.2.4")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.3.1")
 }
 
 val generatedLocalizationDir = layout.buildDirectory.dir("generated/sources/localization/java")
