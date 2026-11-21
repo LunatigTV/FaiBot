@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     implementation("com.github.twitch4j:twitch4j:1.27.0")
-    implementation("net.dv8tion:JDA:6.4.2") {
+    implementation("net.dv8tion:JDA:6.7.0") {
         exclude(module = "opus-java")
     }
     implementation("ch.qos.logback:logback-classic:1.6.7")
