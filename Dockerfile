@@ -1,5 +1,5 @@
 # ---- Build Stage ----
-FROM gradle:9.6.1-jdk21-alpine AS build
+FROM gradle:9.9.1-jdk21-alpine AS build
 
 # Install Python and PyYAML
 RUN apk add --no-cache python3 py3-yaml

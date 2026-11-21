@@ -1,12 +1,12 @@
 plugins {
     id("java")
-    id("com.gradleup.shadow") version "9.0.2"
+    id("com.gradleup.shadow") version "9.6.1"
     id("idea")
     id ("io.freefair.lombok") version "9.0.0"
 }
 
 group = "de.lunatig"
-version = "4.2.1"
+version = "4.3.0"
 
 repositories {
     mavenCentral()
@@ -15,11 +15,11 @@ repositories {
 
 dependencies {
     implementation("com.github.twitch4j:twitch4j:1.27.0")
-    implementation("net.dv8tion:JDA:6.4.2") {
+    implementation("net.dv8tion:JDA:6.7.0") {
         exclude(module = "opus-java")
     }
-    implementation("ch.qos.logback:logback-classic:1.6.3")
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.5.9")
+    implementation("ch.qos.logback:logback-classic:1.6.7")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.5.11")
     implementation("org.slf4j:slf4j-api:2.0.12")
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
     implementation("com.vaadin.external.google:android-json:0.0.20131108.vaadin1")
@@ -28,7 +28,7 @@ dependencies {
     implementation("com.sparkjava:spark-core:2.9.4")
     implementation("com.j256.ormlite:ormlite-core:6.1")
     implementation("com.j256.ormlite:ormlite-jdbc:6.1")
-    implementation("com.github.ben-manes.caffeine:caffeine:3.2.4")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.3.1")
 }
 
 val generatedLocalizationDir = layout.buildDirectory.dir("generated/sources/localization/java")
