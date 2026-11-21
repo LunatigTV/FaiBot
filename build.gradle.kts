@@ -18,7 +18,7 @@ dependencies {
     implementation("net.dv8tion:JDA:6.4.2") {
         exclude(module = "opus-java")
     }
-    implementation("ch.qos.logback:logback-classic:1.6.3")
+    implementation("ch.qos.logback:logback-classic:1.6.7")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.5.9")
     implementation("org.slf4j:slf4j-api:2.0.12")
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
