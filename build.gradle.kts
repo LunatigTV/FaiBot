@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "de.lunatig"
-version = "4.2.1"
+version = "4.3.0"
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ dependencies {
         exclude(module = "opus-java")
     }
     implementation("ch.qos.logback:logback-classic:1.6.7")
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.5.9")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.5.11")
     implementation("org.slf4j:slf4j-api:2.0.12")
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
     implementation("com.vaadin.external.google:android-json:0.0.20131108.vaadin1")
