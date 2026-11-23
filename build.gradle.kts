@@ -24,7 +24,7 @@ dependencies {
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
     implementation("com.vaadin.external.google:android-json:0.0.20131108.vaadin1")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4")
-    implementation("org.apache.httpcomponents.client5:httpclient5:5.6.4")
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.6.5")
     implementation("com.sparkjava:spark-core:2.9.4")
     implementation("com.j256.ormlite:ormlite-core:6.1")
     implementation("com.j256.ormlite:ormlite-jdbc:6.1")
